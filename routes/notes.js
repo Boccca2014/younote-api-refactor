@@ -1,12 +1,10 @@
 const NoteDao = require("../model/NoteDao.js");
 const express = require("express");
+const { addSampleNotes } = require("../data/notes.js");
 const router = express.Router();
 
 const notes = new NoteDao();
-notes.create("Sample 1", "Author 1");
-notes.create("Sample 2", "Author 2");
-notes.create("Sample 3", "Author 2");
-notes.create("Sample 4", "Author 1");
+addSampleNotes(notes);
 
 router.use(express.json());
 
@@ -16,7 +14,7 @@ router.get("/api/notes", (req, res) => {
 });
 
 router.get("/api/notes/:id", (req, res) => {
-  const id = Number.parseInt(req.params.id);
+  const id = req.params.id;
   res.json({ data: notes.read(id) });
 });
 

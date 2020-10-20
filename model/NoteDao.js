@@ -1,16 +1,9 @@
+const faker = require("faker");
 const Note = require("./Note");
-
-const uniqueID = function () {
-  let id = 0;
-  return function () {
-    return id++;
-  };
-};
 
 class NoteDao {
   constructor() {
     this.notes = [];
-    this.nextID = uniqueID();
   }
 
   create(content, author) {
@@ -18,7 +11,7 @@ class NoteDao {
       throw new Error("Invalid attributes");
     }
     const note = new Note(content, author);
-    note._id = this.nextID();
+    note._id = faker.random.uuid();
     this.notes.push(note);
     return note;
   }
